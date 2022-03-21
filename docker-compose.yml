@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  shlink:
+    restart: always
+    build:
+      context: .
+    environment:
+      - DEFAULT_DOMAIN=${DEFAULT_DOMAIN:-localhost}
+      - DB_DRIVER=postgres
+      - DB_HOST=postgres
+      - DB_NAME=${POSTGRES_DB:-shlink}
+      - DB_USER=${POSTGRES_USER:-shlink}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:?}
+      - DB_PORT=${DB_PORT:-5432}
+      - IS_HTTPS_ENABLED=${IS_HTTPS_ENABLED:-false}
+    ports:
+      - "8080:8080"
+      - "2222:2222"
+    networks:
+      - default
+      - internal
+  postgres:
+    image: postgres:11
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-shlink}
+      POSTGRES_USER: ${POSTGRES_USER:-shlink}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+volumes:
+  postgres_data: {}
+
+networks:
+  internal:
+    internal: true
