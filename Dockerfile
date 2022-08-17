@@ -1,4 +1,4 @@
-FROM shlinkio/shlink:stable@sha256:7e8fff23de17b75f5e30411e716b991b44eac093608f00499be5eb84401b1730
+FROM shlinkio/shlink:stable@sha256:78f233acce32412cebd5bc343bffaf94671923a9349a39a0b6319d3bf109cd01
 
 # Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
 RUN apk add openssh \
